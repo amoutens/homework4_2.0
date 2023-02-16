@@ -1,3 +1,4 @@
+import {assertVariables} from "./test.js";
 
 export const fifthTask = {
   studentUser: new Map(),
@@ -49,3 +50,4 @@ export const fifthTask = {
     else return info.averageMark;
   }
 }
+

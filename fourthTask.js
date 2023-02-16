@@ -1,3 +1,5 @@
+import {assertArray, assertObject, assertVariables} from "./test.js";
+
 export const fourthTask = {
   map: {},
   set(key, value){
@@ -31,3 +33,6 @@ export const fourthTask = {
     return Object.entries(fourthTask.map);
   }
 }
+
+
+

@@ -5,15 +5,15 @@ export const thirdTask = {
   [Symbol.iterator](numOfTask = this.iterator) {
     let line = thirdTask.sentence;
     let count = 1;
-    if(line === '') return [];
-    if(typeof (line) !== 'string') throw new Error('Wrong type');
-    if(numOfTask === 'first'){
+    if (line === '') return [];
+    if (typeof (line) !== 'string') throw new Error('Wrong type');
+    if (numOfTask === 'first') {
       let counter = -1;
       let arr = [];
-      if(line.length % 2 === 0 ){
-        while(counter <= line.length) {
+      if (line.length % 2 === 0) {
+        while (counter <= line.length) {
           arr.push(line[counter]);
-          counter +=2;
+          counter += 2;
         }
         return {
           next() {
@@ -21,8 +21,7 @@ export const thirdTask = {
             else return {done: true};
           }
         }
-      }
-      else{
+      } else {
         return {
           next() {
             if (count * 2 < line.length) return {done: false, value: line [(2 * (count++)) - 1]};
@@ -30,19 +29,18 @@ export const thirdTask = {
           }
         }
       }
-    }
-    else if (numOfTask === 'second') {
+    } else if (numOfTask === 'second') {
       let array = [];
-      const div = [' ', '.', ',', '!', '?', ':', ';', '<', '>', '[', ']', '{', '}', '"', '/', '@', '#', '$', "%", '^', '&', '*', '(', ')','_', '—', '~'];
+      const div = [' ', '.', ',', '!', '?', ':', ';', '<', '>', '[', ']', '{', '}', '"', '/', '@', '#', '$', "%", '^', '&', '*', '(', ')', '_', '—', '~'];
       let word = '';
       let countOfDiv = 0;
       let counter = 0;
-      for(let i = 0; i < line.length; i++){
-        if(!div.includes(line[i])){
+      for (let i = 0; i < line.length; i++) {
+        if (!div.includes(line[i])) {
           counter++;
         }
       }
-      if(line.length === counter) {
+      if (line.length === counter) {
         array.push(line);
         count = 0;
         return {
@@ -51,8 +49,7 @@ export const thirdTask = {
             else return {done: true};
           }
         }
-      }
-      else {
+      } else {
         while (!div.includes(line[countOfDiv])) { //для включення першого слова в масив
           word += line[countOfDiv];
           countOfDiv++;
@@ -82,19 +79,18 @@ export const thirdTask = {
         }
       }
 
-    }
-    else if (numOfTask === 'third') {
+    } else if (numOfTask === 'third') {
       let arrForSentences = [];
       let div = ['.', '!', '?'];
       let sent = '';
 
       let countOfDiv = 0;
-      for(let i = 0; i < line.length; i++){
-        if(!div.includes(line[i])){
+      for (let i = 0; i < line.length; i++) {
+        if (!div.includes(line[i])) {
           countOfDiv++;
         }
       }
-      if(line.length === countOfDiv){
+      if (line.length === countOfDiv) {
         arrForSentences.push(line);
         let i = 0;
         return {
@@ -103,8 +99,7 @@ export const thirdTask = {
             else return {done: true};
           }
         }
-      }
-      else{
+      } else {
         while (!div.includes(line[countOfDiv])) { //для включення першого слова в масив
           sent += line[countOfDiv];
           countOfDiv++;
@@ -115,9 +110,9 @@ export const thirdTask = {
         for (let i = 0; i < line.length; i++) {
           if (i === line.length - 1 && !div.includes(line[i])) arrForSentences.push(sent + line[i]);
           if (div.includes(line[i])) {
-            while (div.includes(line[i+1])) {
-              if(line[i+2] === ' ') i += 2;
-              else i++ ;
+            while (div.includes(line[i + 1])) {
+              if (line[i + 2] === ' ') i += 2;
+              else i++;
             }
             arrForSentences.push(sent);
             sent = '';
@@ -132,22 +127,18 @@ export const thirdTask = {
           else return {done: true};
         }
       }
-    }
-    else if (numOfTask === 'fourth') {
+    } else if (numOfTask === 'fourth') {
       let div = ['a', 'A', 'e', 'E', 'y', 'Y', 'u', 'U', 'i', 'I', 'o', 'O'];
       let array = [];
       let words = '';
       let countOfDiv = 0;
-      for(let i = 0; i < line.length; i++){
-        if(!div.includes(line[i])){
+
+      for (let i = 0; i < line.length; i++) {
+        if (div.includes(line[i])) {
           countOfDiv++;
         }
       }
-      if(line.length === countOfDiv){
-        array.push(line);
-      }
-
-      else {
+      if (countOfDiv > 0) {
         countOfDiv = 0;
         while (!div.includes(line[countOfDiv])) {
           words += line[countOfDiv];
@@ -156,24 +147,31 @@ export const thirdTask = {
         array.push(words);
         words = '';
 
-        for (let i = 0; i < line.length; i++) {
-          if (i === line.length - 1 && !div.includes(line[i])) array.push(words + line[i]);
-          if (div.includes(line[i])) {
-            while (div.includes(line[i + 1])) i++;
-            array.push(words);
+        for (let i = 0; i < line.length; i++){
+          if(div.includes(line[i])){
+            array.push(line[i]);
             words = '';
-            continue;
           }
           words += line[i];
         }
+        return {
+          next() {
+            if (count < array.length) return {done: false, value: array[count++]};
+            else return {done: true};
+          }
+        }
       }
-      return {
-        next() {
-          if (count < array.length) return {done: false, value: array[count++]};
-          else return {done: true};
+      else {
+        return {
+          next() {
+            if (count < array.length) return {done: false, value: array[count++]};
+            else return {done: true};
+          }
         }
       }
     }
   }
 }
+
+
 

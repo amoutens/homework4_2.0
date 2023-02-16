@@ -1,3 +1,5 @@
+
+
 export const secondTask = {
   //{type:"deer", amount:5},{type:"crocodile", amount: 3}, {type:"dog", amount: 2}, {type:"lion", amount: 1}
   zoo: [],
@@ -54,14 +56,14 @@ export const secondTask = {
     })
   },
   animalsSortWithoutMethods(){
-    let zooClone = secondTask.zoo.slice(0);
+    let zooClone = secondTask.zoo.slice();
     for (let i = 0; i < zooClone.length - 1; i++) {
       for (let j = 0; j < (zooClone.length - i - 1); j++) {
         if(zooClone[j].amount > zooClone[j+1].amount) {
           [zooClone[j], zooClone[j+1]] = [zooClone[j+1], zooClone[j]];
         }
       }
-
+    //console.log(zooClone);
     }
     return zooClone;
   },
@@ -80,27 +82,27 @@ export const secondTask = {
     if (!checkIsAnimal(type,amount)) return secondTask.zoo;
     else {
       let animal = secondTask.zoo.find(animal => animal.type === type);
-      if (animal) (animal.amount += amount);
+      if (animal) (animal.amount += +amount);
       else {
          secondTask.zoo.push( {
           type: type,
-          amount: amount,
+          amount: +amount,
         });
       }
+      return secondTask.zoo;
     }
-    return secondTask.zoo;
+
   },
-  addAnimalWithoutMethods(type, amount){
+  addAnimalWithoutMethods(type, amount = 1){
     function checkIsAnimalSec(type, amount) {
       if (type === null || type === undefined || !isNaN(type) || (typeof(type) !== 'string')) {
         throw new Error("Type of animal is`nt string");
-
       }
       else {
         if (isNaN(+amount) || !Number.isFinite(+amount) || !Number.isInteger(+amount)) {
           throw new Error("Type of amount is`nt integer");
         }
-        else return true;
+      else return true;
       }
     }
     if (!checkIsAnimalSec(type,amount)) return secondTask.zoo;
@@ -109,18 +111,19 @@ export const secondTask = {
       for (let animal of secondTask.zoo) {
         if (animal.type === type) {
           bool = true;
-          animal.amount += amount;
+          animal.amount += +amount;
         }
       }
       if (!bool) {
         let lengthOfZoo = secondTask.zoo.length;
         secondTask.zoo[lengthOfZoo] = {
           type: type,
-          amount: amount
+          amount: +amount
         }
       }
+      return secondTask.zoo;
     }
-    return secondTask.zoo;
+
   },
   outputAnimalsWithMethods() {
    return secondTask.zoo.map(animal => animal.type);
@@ -168,4 +171,5 @@ export const secondTask = {
     return false;
   }
 }
+
 
