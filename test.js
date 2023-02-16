@@ -27,7 +27,6 @@ export function testFirstTask() {
   assertArray( ["idFirstStr"], Object.keys(taskFirst));
 }
 export function testSecondTask() {
-  try {
     assertArray(secondTask.zoo, []);//перевіряємо пустий масив
     assertVariables(secondTask.amountByTypeOfAnimalWithMethods("elephant"), 0); //перевіряємо кількість окремого виду за ім'ям
     assertVariables(secondTask.amountByTypeOfAnimalWithoutMethods("elephant"), 0);
@@ -100,13 +99,46 @@ export function testSecondTask() {
 
     assertArray(secondTask.outputAnimalsWithoutMethods(), ['crocodile', 'lion', 'leopard']);
     assertArray(secondTask.animalsByAmountWithMethods(7), ['leopard']);
+  try {
+    secondTask.addAnimalWithoutMethods('croco', 2.5); //пробуємо додати 2.5 крокодила
   }
   catch (error){
-    console.log(error.message);
+    console.log('Error: ', error.message);
   }
+  try{
+    secondTask.addAnimalWithMethods(15, 'croco'); //не правильно розташовані елементи
+  }
+  catch (error) {
+    console.log('Error: ', error.message);
+  }
+  try {
+    secondTask.addAnimalWithoutMethods('croco', 'afsfafa'); //кількість тварин задана літерами
+  }
+  catch (error){
+    console.log('Error: ', error.message);
+  }
+  try{
+    secondTask.addAnimalWithMethods(15, 90); //тварина задана числом
+  }
+  catch (error){
+    console.log('Error: ', error.message);
+  }
+  try{
+    secondTask.addAnimalWithoutMethods(null, 10); //тварина нул
+  }
+  catch (error){
+    console.log('Error: ', error.message);
+  }
+  try {
+    secondTask.addAnimalWithMethods("croco", Infinity) //кількість тварин нескінченість
+  }
+  catch (error){
+    console.log('Error: ', error.message);
+  }
+
+
 }
 export function testThreeTask(){
-  try {
     assertVariables(thirdTask.sentence, ""); //напочатку пустий рядок
     thirdTask.sentence = 'Hello world!!! It`s me?'; //вводимо нове речення
 
@@ -219,15 +251,21 @@ export function testThreeTask(){
         'A', 'A'
       ]
     );
+    try { //з не рядком працювати не буде
+    thirdTask.sentence = undefined;
+    thirdTask.iterator = "first";
+    arr = [];
+    for(let el of thirdTask) {
+      arr.push(el);
+    }
+    console.log(arr);
   }
-  catch (error){
-    console.log(error.message);
+  catch (error) {
+    console.log('Error: ', error.message);
   }
-
 }
 
 export function testFourthTask() {
-  try {
     let map = new Map(); //створюємо
     assertVariables(map.get(), fourthTask.get()); //перевіряємо, що об'єкт пустий
 
@@ -281,13 +319,9 @@ export function testFourthTask() {
     fourthTask.clear(); //очищаємо все
 
     assertObject(fourthTask.map, Object.fromEntries(map));
-  }
-  catch (error){
-    console.log(error.message);
-  }
+
 }
 export function testFifthTask(){
-  try {
   let goodStudent = { //приклад студента, який повністю заповнив всі поля
     name: 'Kateryna',
     surname: 'Zhayvoronok',
@@ -367,10 +401,8 @@ export function testFifthTask(){
     mail:'1gayv425@gmail.com',
     averageMark: 0,
     subjects: {}
-  })}
-  catch(error){
-    console.log(error.message);
-  }
+  })
+
   //перевіряємо випадки, коли недостатньо або неправильно введена інформація
   let studentWithoutInfo1 = { //приклад студента, у якого відсутнє поле захисту з паролем
     name: 'Kateryna',
@@ -456,53 +488,52 @@ export function testFifthTask(){
     console.log(fifthTask.makeNewUser(studentWithoutInfo1));
   }
   catch (error){
-    error.message;
+    console.log('Error:', error.message);
   }
   try {
     fifthTask.makeNewUser(studentWithoutInfo2);
   }
   catch (error){
-    error.message;
+    console.log('Error:', error.message);
   }
   try {
     fifthTask.makeNewUser(studentWrongInfo1);
   }
   catch (error){
-    error.message;
+    console.log('Error:', error.message);
   }
   try {
     fifthTask.makeNewUser(studentWrongInfo2);
   }
   catch (error){
-    error.message;
+    console.log('Error:', error.message);
   }
   try {
     fifthTask.makeNewUser(studentWrongInfo3);
   }
   catch (error){
-    error.message;
+    console.log('Error:', error.message);
   }
   try {
     fifthTask.makeNewUser(studentWrongInfo4);
   }
   catch (error){
-    error.message;
+    console.log('Error:', error.message);
   }
   try {
     fifthTask.makeNewUser(studentWrongInfo5);
   }
   catch (error){
-    error.message;
+    console.log('Error:', error.message);
   }
   try {
     assertVariables(fifthTask.averageMarksByUsername('Kateryna Zhayvoronok', 'putinhuilo123'), 96); //неправильний пароль
   }
   catch (error) {
-    error.message;
+    console.log('Error:', error.message);
   }
 }
 export function testSixthTask() {
-  try {
     assertVariables(`${sixthTask}`, 'Mykolaiv:-7;\n' + //перевіряємо виведення рядком
       'Odesa:-3;\n' +
       'Kherson:+3;\n' +
@@ -535,30 +566,28 @@ export function testSixthTask() {
       'Dnipro:+1.'
     );
     assertVariables((+sixthTask), -1.111);
-  }
-  catch (error) {
-    console.log(error.message);
-  }
+
+
   try {
     sixthTask.Lviv = undefined; //якщо температура андефайнд
     console.log(`${sixthTask}`);
   }
   catch (error) {
-    error.message
+    console.log('Error:', error.message);
   }
   try {
     sixthTask.Lviv = 112; //якщо температура перевищує за можливу
     console.log(`${sixthTask}`);
   }
   catch (error) {
-    error.message
+    console.log('Error:', error.message);
   }
   try {
     sixthTask[undefined] = 2; //коли місто андефайнд
     console.log(`${sixthTask}`);
   }
   catch (error) {
-    error.message
+    console.log('Error:', error.message);
   }
 }
 
