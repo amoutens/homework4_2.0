@@ -1,10 +1,8 @@
-
-
 export const secondTask = {
   //{type:"deer", amount:5},{type:"crocodile", amount: 3}, {type:"dog", amount: 2}, {type:"lion", amount: 1}
   zoo: [],
   amountByTypeOfAnimalWithMethods(type) {
-    function findAnimal(animal) {
+    function findAnimal(type) {
       return animal.type === type;
     }
     const animal = secondTask.zoo.find(findAnimal);
@@ -67,67 +65,49 @@ export const secondTask = {
     }
     return zooClone;
   },
+
   addAnimalWithMethods(type, amount = 1) {
-    function checkIsAnimal(type, amount) {
-      if (type === null || type === undefined || !isNaN(type) || (typeof(type) !== 'string')) {
-        throw new Error("Type of animal is`nt string");
-      }
-      else {
-        if (isNaN(+amount) || !Number.isFinite(+amount) || !Number.isInteger(+amount)) {
-          throw new Error("Type of amount is`nt integer");
-        }
-        else return true;
-      }
+    if (type === null || type === undefined || !isNaN(type) || (typeof(type) !== 'string')) {
+      throw new Error("Type of animal is`nt string");
     }
-    if (!checkIsAnimal(type,amount)) return secondTask.zoo;
-    else {
-      let animal = secondTask.zoo.find(animal => animal.type === type);
-      if (animal) (animal.amount += +amount);
-      else {
-         secondTask.zoo.push( {
-          type: type,
-          amount: +amount,
-        });
-      }
-      return secondTask.zoo;
+    if (isNaN(+amount) || !Number.isFinite(+amount) || !Number.isInteger(+amount)) {
+      throw new Error("Type of amount is`nt integer");
     }
 
+    const animal = secondTask.zoo.find(animal => animal.type === type);
+    if (animal) animal.amount += +amount;
+    else {
+      secondTask.zoo.push({
+        type: type,
+        amount: +amount,
+      });
+    }
   },
   addAnimalWithoutMethods(type, amount = 1){
-    function checkIsAnimalSec(type, amount) {
-      if (type === null || type === undefined || !isNaN(type) || (typeof(type) !== 'string')) {
-        throw new Error("Type of animal is`nt string");
-      }
-      else {
-        if (isNaN(+amount) || !Number.isFinite(+amount) || !Number.isInteger(+amount)) {
-          throw new Error("Type of amount is`nt integer");
-        }
-      else return true;
+    if (type === null || type === undefined || !isNaN(type) || (typeof(type) !== 'string')) {
+      throw new Error("Type of animal is`nt string");
+    }
+    if (isNaN(+amount) || !Number.isFinite(+amount) || !Number.isInteger(+amount)) {
+      throw new Error("Type of amount is`nt integer");
+    }
+    let bool = false;
+    for (let animal of secondTask.zoo) {
+      if (animal.type === type) {
+        bool = true;
+        animal.amount += +amount;
       }
     }
-    if (!checkIsAnimalSec(type,amount)) return secondTask.zoo;
-    else {
-      let bool = false;
-      for (let animal of secondTask.zoo) {
-        if (animal.type === type) {
-          bool = true;
-          animal.amount += +amount;
-        }
+    if (!bool) {
+      let lengthOfZoo = secondTask.zoo.length;
+      secondTask.zoo[lengthOfZoo] = {
+        type: type,
+        amount: +amount
       }
-      if (!bool) {
-        let lengthOfZoo = secondTask.zoo.length;
-        secondTask.zoo[lengthOfZoo] = {
-          type: type,
-          amount: +amount
-        }
-      }
-      return secondTask.zoo;
     }
-
-  },
+      //return secondTask.zoo;
+    },
   outputAnimalsWithMethods() {
    return secondTask.zoo.map(animal => animal.type);
-
   },
   outputAnimalsWithoutMethods() {
     let zooAnimals = [];
@@ -138,13 +118,10 @@ export const secondTask = {
   },
   deleteAnimalWithMethods(type) {
     let animalIndex = secondTask.zoo.findIndex( animal => animal.type === type);
-    if (animalIndex === -1){
-      secondTask.zoo.splice(this.zoo.length-1, 1);
-    }
-    else{
+    if (animalIndex !== -1){
       secondTask.zoo.splice(animalIndex, 1);
     }
-    return secondTask.zoo;
+    //return secondTask.zoo;
   },
   deleteAnimalWithoutMethods(type) {
     let i = 0;
@@ -158,7 +135,7 @@ export const secondTask = {
       }
     }
     secondTask.zoo.length--;
-    return secondTask.zoo;
+    //return secondTask.zoo;
   },
   checkElementInZooWithMethods(type) {
     //намагалася тут спочатку використати include, але воно ніяк не хотіло працювати

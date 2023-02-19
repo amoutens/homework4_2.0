@@ -21,5 +21,5 @@ try {
   console.log("Tests passed successfully!\n");
 }
 catch (error){
-  console.log("There is error while passing tests");
+  console.log('There is an error while passing tests');
 }

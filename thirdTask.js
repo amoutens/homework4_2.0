@@ -1,3 +1,5 @@
+import {secondTask} from "./secondTask.js";
+
 export const thirdTask = {
   sentence: "",
   iterator: "",
@@ -29,149 +31,72 @@ export const thirdTask = {
           }
         }
       }
-    } else if (numOfTask === 'second') {
-      let array = [];
+    }
+    else if (numOfTask === 'second') {
       const div = [' ', '.', ',', '!', '?', ':', ';', '<', '>', '[', ']', '{', '}', '"', '/', '@', '#', '$', "%", '^', '&', '*', '(', ')', '_', '—', '~'];
+
+      const words = [];
       let word = '';
-      let countOfDiv = 0;
-      let counter = 0;
-      for (let i = 0; i < line.length; i++) {
-        if (!div.includes(line[i])) {
-          counter++;
-        }
-      }
-      if (line.length === counter) {
-        array.push(line);
-        count = 0;
-        return {
-          next() {
-            if (count < array.length) return {done: false, value: array[count++]};
-            else return {done: true};
-          }
-        }
-      } else {
-        while (!div.includes(line[countOfDiv])) { //для включення першого слова в масив
-          word += line[countOfDiv];
-          countOfDiv++;
-        }
-        array.push(word);
-        word = '';
-
-        for (let i = 0; i < line.length; i++) { //для включення інших слів в масив
-          if (i === line.length - 1 && !div.includes(line[i])) {
-            array.push(word + line[i]);
-          }
-          if (div.includes(line[i])) {
-            while (div.includes(line[i + 1])) { //якщо знаки повторюються по типу "!!!"
-              i++;
-            }
-            array.push(word);
+      for (let symbol of line) {
+        if (div.includes(symbol)) {
+          if (word.length > 0) {
+            words.push(word);
             word = '';
-            continue;
           }
-          word += line[i];
         }
-        return {
-          next() {
-            if (count < array.length) return {done: false, value: array[count++]};
-            else return {done: true};
-          }
+        else {
+          word += symbol;
         }
       }
+      if (!div.includes(line[line.length - 1])) words.push(word);
+      count = 0;
+      return {
+        next() {
 
-    } else if (numOfTask === 'third') {
+          if (count < words.length) return {done: false, value: words[count++]};
+          else return {done: true};
+        }
+      }
+    }
+
+    else if (numOfTask === 'third') {
       let arrForSentences = [];
       let div = ['.', '!', '?'];
       let sent = '';
 
-      let countOfDiv = 0;
-      for (let i = 0; i < line.length; i++) {
-        if (!div.includes(line[i])) {
-          countOfDiv++;
-        }
-      }
-      if (line.length === countOfDiv) {
-        arrForSentences.push(line);
-        let i = 0;
-        return {
-          next() {
-            if (i < arrForSentences.length) return {done: false, value: arrForSentences[i++]};
-            else return {done: true};
-          }
-        }
-      } else {
-        while (!div.includes(line[countOfDiv])) { //для включення першого слова в масив
-          sent += line[countOfDiv];
-          countOfDiv++;
-        }
-        arrForSentences.push(sent);
-        sent = '';
-
-        for (let i = 0; i < line.length; i++) {
-          if (i === line.length - 1 && !div.includes(line[i])) arrForSentences.push(sent + line[i]);
-          if (div.includes(line[i])) {
-            while (div.includes(line[i + 1])) {
-              if (line[i + 2] === ' ') i += 2;
-              else i++;
-            }
+      for (let word of line) {
+        if (div.includes(word)) {
+          if (sent.length > 0) {
             arrForSentences.push(sent);
             sent = '';
           }
-          sent += line[i];
+        }
+        else {
+          sent += word;
         }
       }
-
+      if (!div.includes(line[line.length - 1])) arrForSentences.push(sent);
+      count = 0;
       return {
         next() {
           if (count < arrForSentences.length) return {done: false, value: arrForSentences[count++]};
           else return {done: true};
         }
       }
-    } else if (numOfTask === 'fourth') {
+    }
+    else if (numOfTask === 'fourth') {
       let div = ['a', 'A', 'e', 'E', 'y', 'Y', 'u', 'U', 'i', 'I', 'o', 'O'];
-      let array = [];
-      let words = '';
-      let countOfDiv = 0;
-
-      for (let i = 0; i < line.length; i++) {
-        if (div.includes(line[i])) {
-          countOfDiv++;
-        }
+      const arr = [];
+      for (const symbol of line) {
+        if (div.includes(symbol)) arr.push(symbol);
       }
-      if (countOfDiv > 0) {
-        countOfDiv = 0;
-        while (!div.includes(line[countOfDiv])) {
-          words += line[countOfDiv];
-          countOfDiv++;
-        }
-        array.push(words);
-        words = '';
-
-        for (let i = 0; i < line.length; i++){
-          if(div.includes(line[i])){
-            array.push(line[i]);
-            words = '';
-          }
-          words += line[i];
-        }
-        return {
-          next() {
-            if (count < array.length) return {done: false, value: array[count++]};
-            else return {done: true};
-          }
-        }
-      }
-      else {
-        return {
-          next() {
-            if (count < array.length) return {done: false, value: array[count++]};
-            else return {done: true};
-          }
+      count = 0;
+      return {
+        next() {
+          if (count < arr.length) return {done: false, value: arr[count++]};
+          else return {done: true};
         }
       }
     }
   }
 }
-
-
-

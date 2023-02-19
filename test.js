@@ -77,17 +77,11 @@ export function testSecondTask() {
     );
     assertArray(secondTask.outputAnimalsWithMethods(), ['deer', 'crocodile', 'dog', 'lion']); //масив після сортування не змінився
 
-    assertArray(secondTask.deleteAnimalWithoutMethods('dog'), [{type: 'deer', amount: 5}, {
-      type: 'crocodile',
-      amount: 3
-    }, {type: 'lion', amount: 1}]);
+    secondTask.deleteAnimalWithoutMethods('dog');
     //удаляємо собаку з середини зоопарку
     assertVariables(secondTask.checkElementInZooWithoutMethods('dog'), false); //він не пристуній
 
-    assertArray(secondTask.deleteAnimalWithMethods('deer'), [{type: 'crocodile', amount: 3}, {
-      type: 'lion',
-      amount: 1
-    }]);
+    secondTask.deleteAnimalWithMethods('deer');
     //видаляємо оленя з початку зоопарку
     assertVariables(secondTask.checkElementInZooWithoutMethods('deer'), false); //він не присутній
 
